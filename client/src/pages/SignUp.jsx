@@ -43,21 +43,21 @@ export default function SignUp() {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
-          placeholder="enter username"
+          placeholder="username"
           className=" border p-3  rounded-lg"
           id="username"
           onChange={handleChange}
         />
         <input
           type="email"
-          placeholder="enter email"
+          placeholder="email"
           className=" border p-3 rounded-lg"
           id="email"
           onChange={handleChange}
         />
         <input
           type="password"
-          placeholder="enter password"
+          placeholder="password"
           className=" border p-3 rounded-lg"
           id="password"
           onChange={handleChange}
@@ -70,7 +70,7 @@ export default function SignUp() {
         </button>
       </form>
       <div className="flex gap-2 mt-4 m-2.5">
-        <p>Already Have a account?</p>
+        <p>Already Have an account?</p>
         <Link to={"/sign-in"}>
           <span className="text-blue-700">Sign in</span>
         </Link>
