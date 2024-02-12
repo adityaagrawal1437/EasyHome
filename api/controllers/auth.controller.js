@@ -9,9 +9,9 @@ export const signup = async (req, res, next) => {
   const newUser = new User({ username, email, password: hashedPassword });
   try {
     await newUser.save();
-    res.status(201).json("User Created Sucessfully!");
-  } catch (err) {
-    next(errorHandler(550, "Error"));
+    res.status(201).json("User created successfully!");
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -25,16 +25,11 @@ export const signin = async (req, res, next) => {
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
     const { password: pass, ...rest } = validUser._doc;
     res
-      .cookie("acess_token", token, {
-        httpOnly: true,
-        expires: new Date(Date.now() + 15 * 60 * 60 * 1000),
-      })
+      .cookie("access_token", token, { httpOnly: true })
       .status(200)
-      .json({
-        rest,
-      });
-  } catch (err) {
-    next(err);
+      .json(rest);
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -45,7 +40,7 @@ export const google = async (req, res, next) => {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = user._doc;
       res
-        .cookie("acess_token", token, { httpOnly: true })
+        .cookie("access_token", token, { httpOnly: true })
         .status(200)
         .json(rest);
     } else {
@@ -63,12 +58,11 @@ export const google = async (req, res, next) => {
       });
       await newUser.save();
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
-      const { password, ...rest } = newUser._doc;
+      const { password: pass, ...rest } = newUser._doc;
       res
-        .cookie("acess_token", token, { httpOnly: true })
+        .cookie("access_token", token, { httpOnly: true })
         .status(200)
         .json(rest);
-        
     }
   } catch (error) {
     next(error);
